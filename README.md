@@ -21,4 +21,6 @@ python docs):
     %Z  Time zone name. UTC, EST, CST
     %%  A literal '%' character.
 
-Code is available under the MIT License in case anyone else has a need for it like I do.
+A small test suite is included to test many common use cases. Code is available
+under the MIT License in case anyone else has a need for it like I do.
+
