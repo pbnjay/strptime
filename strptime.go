@@ -93,8 +93,8 @@ func Check(format string) error {
 }
 
 func strptime(value, format string, ignoreUnsupported bool) (time.Time, error) {
-	parse_str := ""
-	parse_fmt := ""
+	parseStr := ""
+	parseFmt := ""
 	vi := 0
 
 	parts := strings.Split(format, "%")
@@ -149,14 +149,14 @@ func strptime(value, format string, ignoreUnsupported bool) (time.Time, error) {
 			}
 
 			if c == 'f' {
-				parse_fmt += "." + f
-				parse_str += "." + value[vi:vi+vj]
+				parseFmt += "." + f
+				parseStr += "." + value[vi:vi+vj]
 			} else if c == 'p' {
-				parse_fmt += " " + f
-				parse_str += " " + strings.ToUpper(value[vi:vi+vj])
+				parseFmt += " " + f
+				parseStr += " " + strings.ToUpper(value[vi:vi+vj])
 			} else {
-				parse_fmt += " " + f
-				parse_str += " " + value[vi:vi+vj]
+				parseFmt += " " + f
+				parseStr += " " + value[vi:vi+vj]
 			}
 		}
 
@@ -173,12 +173,15 @@ func strptime(value, format string, ignoreUnsupported bool) (time.Time, error) {
 		return time.Time{}, ErrFormatMismatch
 	}
 
-	return time.Parse(parse_fmt, parse_str)
+	return time.Parse(parseFmt, parseStr)
 }
 
 var (
-	ErrFormatMismatch    = errors.New("Date Format Mismatch")
-	ErrFormatUnsupported = errors.New("Date Format contains unsupported percent-encodings")
+	// ErrFormatMismatch means that intervening text in the strptime format string did not
+	// match within the parsed string.
+	ErrFormatMismatch = errors.New("date format mismatch")
+	// ErrFormatUnsupported means that the format string includes unsupport percent-escapes.
+	ErrFormatUnsupported = errors.New("date format contains unsupported percent-encodings")
 
 	formatMap = map[int]string{
 		'd': "02",
