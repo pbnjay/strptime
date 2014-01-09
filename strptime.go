@@ -75,6 +75,23 @@ func MustParse(value, format string) time.Time {
 	return t
 }
 
+// Check verifies that format is a fully-supported strptime format string for this implementation.
+func Check(format string) error {
+	parts := strings.Split(format, "%")
+	for pi, ps := range parts {
+		// since we split on '%', this is the format code
+		c := int(ps[0])
+		if c == '%' {
+			continue
+		}
+		if _, found := formatMap[c]; !found {
+			return ErrFormatUnsupported
+		}
+	}
+
+	return nil
+}
+
 func strptime(value, format string, ignoreUnsupported bool) (time.Time, error) {
 	parse_str := ""
 	parse_fmt := ""
