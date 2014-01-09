@@ -39,7 +39,7 @@ THE SOFTWARE.
 //     %Z  Time zone name. UTC, EST, CST
 //     %%  A literal '%' character.
 //
-// Note that if an unsupported specifier is used, it may NOT directly precede a
+// BUG(pbnjay): If an unsupported specifier is used, it may NOT directly precede a
 // supported specifier (i.e. there must be intervening text to match first)
 package strptime
 
@@ -55,7 +55,7 @@ import (
 // Errors from time.Parse are passed through untouched.
 //
 // If a unsupported format specifier is provided, it will be ignored and matching
-// text will be skipped. To receive errors for unsupported formats, use StrptimeStrict.
+// text will be skipped. To receive errors for unsupported formats, use ParseStrict or call Check.
 func Parse(value, format string) (time.Time, error) {
 	return strptime(value, format, true)
 }
