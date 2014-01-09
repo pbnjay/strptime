@@ -49,25 +49,25 @@ import (
 	"time"
 )
 
-// Strptime accepts a percent-encoded strptime format string, converts it for use with
+// Parse accepts a percent-encoded strptime format string, converts it for use with
 // time.Parse, and returns the resulting time.Time value. If non-date-related format
 // text does not match within the string value, then ErrFormatMismatch will be returned.
 // Errors from time.Parse are passed through untouched.
 //
 // If a unsupported format specifier is provided, it will be ignored and matching
 // text will be skipped. To receive errors for unsupported formats, use StrptimeStrict.
-func Strptime(value, format string) (time.Time, error) {
+func Parse(value, format string) (time.Time, error) {
 	return strptime(value, format, true)
 }
 
-// StrptimeStrict returns ErrFormatUnsupported for unsupported formats strings, but is otherwise
-// identical to Strptime.
-func StrptimeStrict(value, format string) (time.Time, error) {
+// ParseStrict returns ErrFormatUnsupported for unsupported formats strings, but is otherwise
+// identical to Parse.
+func ParseStrict(value, format string) (time.Time, error) {
 	return strptime(value, format, false)
 }
 
-// MustStrptime is a wrapper for Strptime which panics on any error.
-func MustStrptime(value, format string) time.Time {
+// MustParse is a wrapper for Parse which panics on any error.
+func MustParse(value, format string) time.Time {
 	t, err := strptime(value, format, true)
 	if err != nil {
 		panic(err)
